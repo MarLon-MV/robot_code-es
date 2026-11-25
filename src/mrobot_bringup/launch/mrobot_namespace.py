@@ -1,4 +1,4 @@
-"""Utilidades compartidas por los launch de hrobot_bringup (manejo del namespace del robot).
+"""Utilidades compartidas por los launch de mrobot_bringup (manejo del namespace del robot).
 
 No es un launch: es un módulo Python normal. Los launch añaden su propia carpeta a sys.path y lo importan.
 

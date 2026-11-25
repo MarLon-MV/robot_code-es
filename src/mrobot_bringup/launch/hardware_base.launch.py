@@ -4,14 +4,14 @@ NOTA: el Create 3 NO se lanza aquí. Corre su propio firmware y se alcanza por r
 USB). La Raspberry Pi 5 debe usar el mismo ROS_DOMAIN_ID y RMW que el Create 3 (se configura en su web:
 Application > ROS 2). El Create 3 vive en el namespace /r2; los nodos de este launch se ponen bajo el mismo
 `robot_namespace` y TF se remapea a <ns>/tf y <ns>/tf_static. El namespace se aplica aquí UNA vez (ver
-hrobot_namespace.py): no envuelvas este launch en otro namespace.
+mrobot_namespace.py): no envuelvas este launch en otro namespace.
 
 Driver del LD19: `ldlidar_stl_ros2` de LDRobot (ejecutable `ldlidar_stl_ros2_node`). Se compila desde el
 código fuente en el workspace; no está disponible por rosdep.
 
 Uso:
-    ros2 launch hrobot_bringup hardware_base.launch.py
-    ros2 launch hrobot_bringup hardware_base.launch.py laser_yaw:=-1.5707963 lidar_port:=/dev/ldlidar
+    ros2 launch mrobot_bringup hardware_base.launch.py
+    ros2 launch mrobot_bringup hardware_base.launch.py laser_yaw:=-1.5707963 lidar_port:=/dev/ldlidar
 """
 
 import os
@@ -24,9 +24,9 @@ from launch.substitutions import Command, FindExecutable, LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
-# hrobot_namespace.py es un módulo normal que vive junto a este launch.
+# mrobot_namespace.py es un módulo normal que vive junto a este launch.
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
-from hrobot_namespace import (  # noqa: E402
+from mrobot_namespace import (  # noqa: E402
     namespaced,
     resolve_namespace,
     robot_namespace_argument,
@@ -82,7 +82,7 @@ def _setup(context, *args, **kwargs):
 
     # scan_raw (500-504 rayos variables) -> scan (num_beams fijo), que es lo que exige slam_toolbox.
     scan_resampler = Node(
-        package="hrobot_bringup",
+        package="mrobot_bringup",
         executable="scan_resampler.py",
         name="scan_resampler",
         output="screen",
@@ -92,7 +92,7 @@ def _setup(context, *args, **kwargs):
 
     # odom (BEST_EFFORT, del Create 3) -> odom_reliable (RELIABLE). Solo lo consume Nav2 (paso 4).
     odom_relay = Node(
-        package="hrobot_bringup",
+        package="mrobot_bringup",
         executable="odom_relay.py",
         name="odom_relay",
         output="screen",

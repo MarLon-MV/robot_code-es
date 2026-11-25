@@ -43,7 +43,7 @@ DOMAIN_ID="${ROS_DOMAIN_ID:-0}"
 RMW_NAME="${RMW_IMPLEMENTATION:-rmw_fastrtps_cpp}"
 
 # Paquetes del robot real: rosdep solo instala las dependencias de estos (no las de la simulación).
-REAL_ROBOT_PATHS=(src/hrobot_bringup src/irobot_create_description src/ldlidar_stl_ros2)
+REAL_ROBOT_PATHS=(src/mrobot_bringup src/irobot_create_description src/ldlidar_stl_ros2)
 
 SKIP_UDEV=0
 SKIP_NET=0
@@ -115,10 +115,6 @@ if [ "${SKIP_NET}" -eq 0 ]; then
   echo "Guardado en ${NET_FILE}. Abre una terminal nueva (o 'source ~/.bashrc')."
   echo "IMPORTANTE: el Create 3 debe usar el mismo RMW (interfaz web > Application > ROS 2) y su ROS_DOMAIN_ID"
   echo "debe ser ${DOMAIN_ID}. Reinicia la aplicación del Create 3 tras cambiarlos."
-  if grep -qxF "# >>> hrobot ros_net >>>" "${BASHRC}"; then
-    echo "AVISO: ${BASHRC} también tiene el bloque 'hrobot ros_net' de una instalación anterior. Si sus valores" >&2
-    echo "       difieren de los de arriba, elimínalo: el que aparezca más abajo en el archivo es el que vale." >&2
-  fi
 else
   log "Omitiendo configuración de red ROS (--skip-net)"
 fi
@@ -150,13 +146,13 @@ log "Listo (no se ha compilado nada)"
 cat <<EOF
 Siguientes pasos:
   cd ${REPO_ROOT}
-  colcon build --symlink-install --parallel-workers 2 --packages-up-to hrobot_bringup
+  colcon build --symlink-install --parallel-workers 2 --packages-up-to mrobot_bringup
       # 2 workers para no agotar la RAM de la Pi; --packages-up-to deja fuera la simulación
   source ${REPO_ROOT}/install/setup.bash
   ls -l /dev/ldlidar            # o /dev/ttyUSB0 si no usas la regla udev
   echo \$ROS_DOMAIN_ID \$RMW_IMPLEMENTATION   # deben coincidir con los del Create 3
   ros2 topic list | grep -E '/r2/(odom|cmd_vel)'   # comprueba los topics del Create 3
-  ros2 launch hrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar
+  ros2 launch mrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar
   # otro robot sin tocar el entorno: ... mapping.launch.py robot_namespace:=r3
 Namespace en esta terminal: ${CREATE3_ROBOT_NAMESPACE-r2} (variable CREATE3_ROBOT_NAMESPACE, o 'r2' por defecto).
 Todo el stack cuelga de él: /r2/scan, /r2/map, /r2/cmd_vel... El namespace del Create 3 se cambia en su interfaz web.

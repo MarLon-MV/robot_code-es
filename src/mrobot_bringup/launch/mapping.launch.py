@@ -3,10 +3,10 @@
 El robot se mueve con teleoperación:
     ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=/r2/cmd_vel
 Cada include aplica el namespace por su cuenta, por eso este launch NO lo envuelve en otro namespace
-(ver hrobot_namespace.py).
+(ver mrobot_namespace.py).
 
 Uso:
-    ros2 launch hrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar
+    ros2 launch mrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar
 """
 
 import os
@@ -19,12 +19,12 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
-from hrobot_namespace import robot_namespace_argument  # noqa: E402
+from mrobot_namespace import robot_namespace_argument  # noqa: E402
 
 
 def generate_launch_description():
     launch_dir = os.path.join(
-        get_package_share_directory("hrobot_bringup"), "launch")
+        get_package_share_directory("mrobot_bringup"), "launch")
     namespace = LaunchConfiguration("robot_namespace")
     use_sim_time = LaunchConfiguration("use_sim_time")
 

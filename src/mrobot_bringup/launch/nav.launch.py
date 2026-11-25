@@ -29,7 +29,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
-from hrobot_namespace import (  # noqa: E402
+from mrobot_namespace import (  # noqa: E402
     namespaced,
     resolve_namespace,
     rewrite_yaml,
@@ -48,7 +48,7 @@ def _setup(context, *args, **kwargs):
     namespace = resolve_namespace(context)
     use_sim_time = LaunchConfiguration("use_sim_time")
     autostart = LaunchConfiguration("autostart")
-    pkg = get_package_share_directory("hrobot_bringup")
+    pkg = get_package_share_directory("mrobot_bringup")
 
     # El mapa es obligatorio. Este launch se incluye PRIMERO, así que el error salta antes de
     # arrancar ningún proceso.
@@ -57,7 +57,7 @@ def _setup(context, *args, **kwargs):
     if not map_yaml or not os.path.isfile(map_yaml):
         raise RuntimeError(
             f"map_yaml:='{map_yaml_arg}' no existe o está vacío. Pasa la ruta absoluta al .yaml del mapa, "
-            "p. ej. map_yaml:=$HOME/MaterialenBuddy/robot_code/maps/mapa1.yaml "
+            "p. ej. map_yaml:=$HOME/robot_code-es/maps/mapa1.yaml "
             "(se genera con scripts/save_map.sh)."
         )
 
@@ -142,7 +142,7 @@ def _setup(context, *args, **kwargs):
 
 def generate_launch_description():
     default_params = os.path.join(
-        get_package_share_directory("hrobot_bringup"), "config", "nav2_params.yaml"
+        get_package_share_directory("mrobot_bringup"), "config", "nav2_params.yaml"
     )
     return LaunchDescription(
         [

@@ -8,7 +8,7 @@ Se incluye aquí para no tener que clonarlo aparte al preparar el robot.
 - **Licencia:** MIT, © 2020 SHENZHEN LDROBOT CO., LTD. (ver `LICENSE`; debe conservarse)
 - **Se excluyó:** la carpeta `.git` y el `.gitignore` del original.
 - **Se eliminó, por no ser necesario:** `launch/` (launch de ejemplo del fabricante; el nuestro está en
-  `hrobot_bringup`), `rviz2/`, `scripts/` (reglas udev de ejemplo; las gestiona `scripts/setup_pi.sh`
+  `mrobot_bringup`), `rviz2/`, `scripts/` (reglas udev de ejemplo; las gestiona `scripts/setup_pi.sh`
   del proyecto) y `README.md`. Se conserva todo el código del driver, incluido el soporte de LD06 y STL27L.
 
 ## Modificaciones respecto al original

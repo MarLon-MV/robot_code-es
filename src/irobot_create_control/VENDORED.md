@@ -15,7 +15,7 @@ para configurar el controlador de las ruedas en Gazebo.
 1. `CMakeLists.txt`: solo instala `config` (se quitó `launch`, porque no se copió) y se eliminaron los tests.
 2. `package.xml`: se quitaron las dependencias `ros2launch` y `rsl` y las de tests, que solo usaba la carpeta `launch`.
 3. No se copió `launch/include/control.py`: el arranque de los controladores está en
-   `hrobot_simulation/launch/sim.launch.py`.
+   `mrobot_simulation/launch/sim.launch.py`.
 
 ## Aviso: parámetros obsoletos en control.yaml
 

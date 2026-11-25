@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(hrobot_simulation)
+project(mrobot_simulation)
 
 find_package(ament_cmake REQUIRED)
 

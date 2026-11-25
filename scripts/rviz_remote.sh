@@ -2,8 +2,8 @@
 # Abre RViz en esta máquina (tu PC) para ver el robot real que corre en la Pi.
 #
 # En la Pi lanza antes, sin RViz (la Pi no necesita pantalla):
-#   ros2 launch hrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar rviz:=false
-#   ros2 launch hrobot_bringup navigation.launch.py map_yaml:=<ruta> lidar_port:=/dev/ldlidar rviz:=false
+#   ros2 launch mrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar rviz:=false
+#   ros2 launch mrobot_bringup navigation.launch.py map_yaml:=<ruta> lidar_port:=/dev/ldlidar rviz:=false
 #
 # Las dos máquinas deben estar en la misma red y usar el mismo ROS_DOMAIN_ID y RMW_IMPLEMENTATION.
 #
@@ -40,7 +40,7 @@ done
 
 NAMESPACE="${NAMESPACE#/}"; NAMESPACE="${NAMESPACE%/}"
 
-SRC_RVIZ="${WS_ROOT}/src/hrobot_bringup/rviz/${CONFIG}.rviz"
+SRC_RVIZ="${WS_ROOT}/src/mrobot_bringup/rviz/${CONFIG}.rviz"
 [ -f "${SRC_RVIZ}" ] || die "no existe ${SRC_RVIZ}"
 
 # set -u rompe con los setup.bash de ROS; se desactiva solo mientras se cargan.

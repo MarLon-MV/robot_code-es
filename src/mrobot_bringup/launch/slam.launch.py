@@ -34,7 +34,7 @@ from launch_ros.events.lifecycle import ChangeState
 from lifecycle_msgs.msg import Transition
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
-from hrobot_namespace import (  # noqa: E402
+from mrobot_namespace import (  # noqa: E402
     namespaced,
     resolve_namespace,
     rewrite_yaml,
@@ -47,7 +47,7 @@ from hrobot_namespace import (  # noqa: E402
 def _setup(context, *args, **kwargs):
     namespace = resolve_namespace(context)
     use_sim_time = LaunchConfiguration("use_sim_time")
-    pkg = get_package_share_directory("hrobot_bringup")
+    pkg = get_package_share_directory("mrobot_bringup")
 
     slam_yaml = rewrite_yaml(os.path.join(
         pkg, "config", "slam_params.yaml"), namespace)

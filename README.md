@@ -24,14 +24,13 @@ robot_code/
 │   └── rviz_remote.sh             abre RViz en tu PC para el robot que corre en la Pi
 └── src/
     ├── irobot_create_description/ URDF del Create 3 (oficial) + LD19 (propio) + launch para verlo en RViz
-    ├── hrobot_bringup/            robot real: LiDAR, mapeo y navegación
-    ├── hrobot_simulation/         Gazebo Harmonic
+    ├── mrobot_bringup/            robot real: LiDAR, mapeo y navegación
+    ├── mrobot_simulation/         Gazebo Harmonic
     ├── irobot_create_control/     configuración del controlador de ruedas (solo simulación; copia mínima)
     └── ldlidar_stl_ros2/          driver oficial del LD19 (copia, no hace falta clonarlo)
 ```
 
-El prefijo `hrobot_` viene del proyecto del que se partió; los paquetes de iRobot conservan su nombre original
-porque los URDF oficiales lo referencian.
+Los paquetes de iRobot conservan su nombre original porque los URDF oficiales lo referencian.
 
 ## Cómo encaja
 
@@ -54,7 +53,7 @@ Todo el stack cuelga del namespace del robot (`/r2/scan`, `/r2/map`...). Se camb
 ```bash
 cd robot_code
 scripts/setup_pi.sh                       # rosdep, ROS_DOMAIN_ID / RMW, regla udev /dev/ldlidar
-colcon build --symlink-install --parallel-workers 2 --packages-up-to hrobot_bringup
+colcon build --symlink-install --parallel-workers 2 --packages-up-to mrobot_bringup
 source install/setup.bash
 ```
 
@@ -76,7 +75,7 @@ ros2 topic list | grep -E '/r2/(odom|cmd_vel)'
 En la Pi:
 
 ```bash
-ros2 launch hrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar rviz:=false
+ros2 launch mrobot_bringup mapping.launch.py lidar_port:=/dev/ldlidar rviz:=false
 ```
 
 En tu PC, para ver el mapa:
@@ -106,7 +105,7 @@ Genera en `maps/` cuatro archivos: `mapa1.yaml` y `mapa1.pgm` (la imagen, para n
 Pon el robot en el punto desde el que mapeaste (el origen del mapa, normalmente el dock) y, en la Pi:
 
 ```bash
-ros2 launch hrobot_bringup navigation.launch.py map_yaml:=$PWD/maps/mapa1.yaml lidar_port:=/dev/ldlidar rviz:=false
+ros2 launch mrobot_bringup navigation.launch.py map_yaml:=$PWD/maps/mapa1.yaml lidar_port:=/dev/ldlidar rviz:=false
 ```
 
 En tu PC: `scripts/rviz_remote.sh navigation`. La meta se da con la herramienta **2D Goal Pose** de RViz.
@@ -131,10 +130,10 @@ argumentos o `set_initial_pose:=false` y usa **2D Pose Estimate** en RViz.
 rosdep install --from-paths src --ignore-src -y
 colcon build --symlink-install
 source install/setup.bash
-ros2 launch hrobot_simulation sim.launch.py                              # mapear
+ros2 launch mrobot_simulation sim.launch.py                              # mapear
 ros2 run teleop_twist_keyboard teleop_twist_keyboard                     # en otra terminal
 scripts/save_map.sh sala --namespace ''                                  # la simulación no usa namespace
-ros2 launch hrobot_simulation sim.launch.py nav:=true map_yaml:=$PWD/maps/sala.yaml
+ros2 launch mrobot_simulation sim.launch.py nav:=true map_yaml:=$PWD/maps/sala.yaml
 ```
 
 Otros argumentos: `headless:=true` (sin interfaz de Gazebo), `x`, `y`, `yaw` (pose inicial) y `world` (otro mundo `.sdf`).

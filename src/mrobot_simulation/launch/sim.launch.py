@@ -37,8 +37,8 @@ from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
-    sim_share = get_package_share_directory("hrobot_simulation")
-    bringup_share = get_package_share_directory("hrobot_bringup")
+    sim_share = get_package_share_directory("mrobot_simulation")
+    bringup_share = get_package_share_directory("mrobot_bringup")
     description_share = get_package_share_directory(
         "irobot_create_description")
     ros_gz_sim_share = get_package_share_directory("ros_gz_sim")
@@ -144,7 +144,7 @@ def generate_launch_description():
 
     # Conversor Twist (teleop, Nav2) -> TwistStamped (diff_drive_controller de Jazzy).
     cmd_vel_stamper = Node(
-        package="hrobot_simulation",
+        package="mrobot_simulation",
         executable="cmd_vel_stamper.py",
         output="screen",
         parameters=[{"use_sim_time": True}],
